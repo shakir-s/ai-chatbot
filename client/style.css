@@ -205,6 +205,7 @@ html, body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .control-select {
@@ -820,18 +821,114 @@ code.inline-code {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* 8. Media Queries (Mobile Responsiveness) */
+/* ==========================================================================
+   8. RESPONSIVE DESIGN — Mobile, Tablet & Desktop
+   ========================================================================== */
+
+/* --- Large Desktop (> 1200px) --- */
+@media (min-width: 1200px) {
+  .app-container {
+    max-width: 1100px;
+    border-left: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+  }
+}
+
+/* --- Standard Desktop / Large Tablet Landscape (769px – 1199px) --- */
+@media (min-width: 769px) and (max-width: 1199px) {
+  .app-container {
+    max-width: 960px;
+  }
+}
+
+/* --- Tablet Portrait (641px – 768px) --- */
+@media (max-width: 768px) {
+  .app-container {
+    max-width: 100%;
+  }
+
+  .app-header {
+    padding: 0.85rem 1.15rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .header-controls {
+    gap: 0.4rem;
+  }
+
+  .brand-title {
+    font-size: 1.15rem;
+  }
+
+  .control-select {
+    max-width: 150px;
+    font-size: 0.82rem;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .chat-container {
+    padding: 1.15rem;
+  }
+
+  .message-wrapper {
+    max-width: 90%;
+  }
+
+  .welcome-title {
+    font-size: 1.65rem;
+  }
+
+  .welcome-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .prompt-chips {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .app-footer {
+    padding: 0.85rem 1.15rem 1rem;
+  }
+}
+
+/* --- Mobile Landscape / Large Phones (481px – 640px) --- */
 @media (max-width: 640px) {
+  .app-container {
+    max-width: 100%;
+  }
+
   .app-header {
     padding: 0.75rem 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
   }
-  
+
+  .brand {
+    flex: 1;
+    min-width: 0;
+  }
+
   .brand-title {
     font-size: 1.1rem;
   }
 
+  .brand-avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+  .brand-avatar svg {
+    width: 18px;
+    height: 18px;
+  }
+
   .status-indicator {
     display: none;
+  }
+
+  .header-controls {
+    gap: 0.35rem;
   }
 
   .control-select {
@@ -840,23 +937,386 @@ code.inline-code {
     padding: 0.35rem 0.5rem;
   }
 
+  .icon-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .icon-btn .icon {
+    width: 16px;
+    height: 16px;
+  }
+
   .chat-container {
     padding: 1rem;
+    gap: 1rem;
   }
 
   .message-wrapper {
     max-width: 92%;
+    gap: 0.6rem;
+  }
+
+  .avatar {
+    width: 32px;
+    height: 32px;
+    font-size: 0.85rem;
+  }
+
+  .bubble {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .welcome-screen {
+    padding: 1.5rem 0.75rem;
+  }
+
+  .welcome-title {
+    font-size: 1.5rem;
+  }
+
+  .welcome-subtitle {
+    font-size: 0.88rem;
+    margin-bottom: 1.5rem;
   }
 
   .prompt-chips {
     grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+
+  .chip-btn {
+    padding: 0.75rem 0.85rem;
+    font-size: 0.83rem;
   }
 
   .app-footer {
     padding: 0.75rem 1rem;
   }
 
+  .input-wrapper {
+    padding: 0.4rem 0.6rem 0.4rem 0.85rem;
+    border-radius: var(--radius-md);
+  }
+
+  .chat-input {
+    font-size: 0.9rem;
+  }
+
+  .send-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .send-btn .icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .action-btn {
+    width: 32px;
+    height: 32px;
+  }
+
   .input-meta .meta-hint {
     display: none;
+  }
+
+  .input-meta {
+    padding: 0 0.25rem;
+  }
+
+  /* Code blocks should not overflow on mobile */
+  .code-box-body pre {
+    font-size: 0.78rem !important;
+  }
+
+  .code-box-body pre code {
+    font-size: 0.78rem !important;
+  }
+
+  .toast-container {
+    bottom: 16px;
+    right: 16px;
+    left: 16px;
+  }
+
+  .toast {
+    font-size: 0.8rem;
+    padding: 0.55rem 0.85rem;
+  }
+}
+
+/* --- Small Phones (≤ 480px) --- */
+@media (max-width: 480px) {
+  .app-header {
+    padding: 0.6rem 0.75rem;
+  }
+
+  .brand-title {
+    font-size: 1rem;
+  }
+
+  .brand-avatar {
+    width: 32px;
+    height: 32px;
+  }
+
+  .brand-avatar svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .header-controls {
+    gap: 0.25rem;
+  }
+
+  /* Stack model selector on very small screens */
+  .model-selector-wrapper {
+    order: 5;
+    flex-basis: 100%;
+  }
+
+  .control-select {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .icon-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: var(--radius-sm);
+  }
+
+  .icon-btn .icon {
+    width: 15px;
+    height: 15px;
+  }
+
+  .chat-container {
+    padding: 0.75rem;
+    gap: 0.85rem;
+  }
+
+  .message-wrapper {
+    max-width: 95%;
+    gap: 0.5rem;
+  }
+
+  .avatar {
+    width: 28px;
+    height: 28px;
+    font-size: 0.75rem;
+  }
+
+  .bubble {
+    padding: 0.65rem 0.85rem;
+    font-size: 0.88rem;
+    border-radius: var(--radius-md);
+  }
+
+  .welcome-screen {
+    padding: 1rem 0.5rem;
+  }
+
+  .welcome-badge {
+    font-size: 0.72rem;
+    padding: 0.3rem 0.7rem;
+  }
+
+  .welcome-title {
+    font-size: 1.3rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .welcome-subtitle {
+    font-size: 0.82rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .prompt-chips {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .chip-btn {
+    padding: 0.65rem 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .app-footer {
+    padding: 0.6rem 0.75rem 0.75rem;
+  }
+
+  .input-wrapper {
+    padding: 0.35rem 0.5rem 0.35rem 0.75rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .chat-input {
+    font-size: 0.88rem;
+    max-height: 110px;
+  }
+
+  .input-actions {
+    margin-left: 0.35rem;
+    gap: 0.25rem;
+  }
+
+  .send-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: var(--radius-sm);
+  }
+
+  .send-btn .icon {
+    width: 15px;
+    height: 15px;
+  }
+
+  .action-btn {
+    width: 30px;
+    height: 30px;
+  }
+
+  .input-meta {
+    font-size: 0.68rem;
+    padding: 0 0.15rem;
+  }
+
+  .message-meta {
+    font-size: 0.68rem;
+    gap: 0.35rem;
+  }
+
+  .msg-action-btn {
+    font-size: 0.68rem;
+    padding: 0.1rem 0.25rem;
+  }
+
+  /* Code blocks on tiny screens */
+  .code-box-header {
+    padding: 0.35rem 0.65rem;
+  }
+
+  .code-box-body pre {
+    padding: 0.65rem 0.75rem !important;
+  }
+
+  .code-box-body pre code {
+    font-size: 0.75rem !important;
+    line-height: 1.5 !important;
+  }
+
+  .code-box-lang-wrapper {
+    font-size: 0.7rem;
+  }
+
+  .code-copy-btn {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.4rem;
+  }
+
+  .toast-container {
+    bottom: 12px;
+    right: 12px;
+    left: 12px;
+  }
+
+  .toast {
+    font-size: 0.78rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radius-sm);
+  }
+}
+
+/* --- Landscape phones (short viewport height) --- */
+@media (max-height: 500px) {
+  .welcome-screen {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .welcome-title {
+    font-size: 1.2rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .welcome-subtitle {
+    font-size: 0.82rem;
+    margin-bottom: 1rem;
+  }
+
+  .prompt-chips {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.4rem;
+  }
+
+  .chip-btn {
+    padding: 0.5rem 0.7rem;
+    font-size: 0.78rem;
+  }
+
+  .app-footer {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .chat-input {
+    max-height: 80px;
+  }
+}
+
+/* --- Touch device optimizations --- */
+@media (hover: none) and (pointer: coarse) {
+  /* Ensure minimum touch target sizes (48px recommended by WCAG) */
+  .icon-btn {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .send-btn {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .action-btn {
+    min-width: 40px;
+    min-height: 40px;
+  }
+
+  .chip-btn {
+    min-height: 48px;
+  }
+
+  /* Remove hover effects that don't apply on touch */
+  .icon-btn:hover {
+    transform: none;
+  }
+
+  .chip-btn:hover {
+    transform: none;
+  }
+
+  .send-btn:hover {
+    transform: none;
+  }
+}
+
+/* --- Safe area insets for notched / modern phones (iPhone X+, etc.) --- */
+@supports (padding: max(0px)) {
+  .app-header {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+
+  .app-footer {
+    padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+
+  .chat-container {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
   }
 }
