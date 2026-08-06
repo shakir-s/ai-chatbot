@@ -131,6 +131,7 @@ html, body {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  height: 100dvh;
   max-width: 1050px;
   margin: 0 auto;
   background-color: var(--bg-primary);
@@ -138,12 +139,12 @@ html, body {
   position: relative;
 }
 
-/* Header */
+/* Header Base Styles */
 .app-header {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem 1.5rem;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 0.75rem 1rem;
   background-color: var(--bg-glass);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -151,15 +152,22 @@ html, body {
   z-index: 10;
 }
 
+.header-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
 .brand {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.65rem;
 }
 
 .brand-avatar {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border-radius: var(--radius-md);
   background: var(--accent-gradient);
   display: flex;
@@ -167,20 +175,22 @@ html, body {
   justify-content: center;
   color: #fff;
   box-shadow: var(--shadow-glow);
+  flex-shrink: 0;
 }
 
 .brand-avatar svg {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
 }
 
 .brand-title {
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   font-weight: 700;
   letter-spacing: -0.02em;
   background: var(--accent-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  line-height: 1.2;
 }
 
 .status-indicator {
@@ -200,15 +210,23 @@ html, body {
   box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
 }
 
-/* Controls */
-.header-controls {
+/* Header Actions & Controls */
+.header-actions {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.header-model-bar {
+  width: 100%;
+}
+
+.model-selector-wrapper {
+  width: 100%;
 }
 
 .control-select {
+  width: 100%;
   background-color: var(--bg-secondary);
   color: var(--text-primary);
   border: 1px solid var(--border-color);
@@ -230,13 +248,14 @@ html, body {
   background-color: var(--bg-secondary);
   border: 1px solid var(--border-color);
   color: var(--text-secondary);
-  width: 38px;
-  height: 38px;
+  width: 36px;
+  height: 36px;
   border-radius: var(--radius-md);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  flex-shrink: 0;
   transition: all var(--transition-fast);
 }
 
@@ -251,8 +270,8 @@ html, body {
 }
 
 .icon-btn .icon {
-  width: 18px;
-  height: 18px;
+  width: 17px;
+  height: 17px;
 }
 
 .icon-btn.active {
@@ -825,6 +844,33 @@ code.inline-code {
    8. RESPONSIVE DESIGN — Mobile, Tablet & Desktop
    ========================================================================== */
 
+/* --- Desktop Layout (≥ 641px) --- */
+@media (min-width: 641px) {
+  .app-header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 1.5rem;
+    gap: 1.25rem;
+  }
+
+  .header-top-bar {
+    width: auto;
+    flex: 1;
+  }
+
+  .header-model-bar {
+    width: auto;
+    max-width: 220px;
+    margin-left: auto;
+    margin-right: 0.5rem;
+  }
+
+  .control-select {
+    width: auto;
+  }
+}
+
 /* --- Large Desktop (> 1200px) --- */
 @media (min-width: 1200px) {
   .app-container {
@@ -847,26 +893,6 @@ code.inline-code {
     max-width: 100%;
   }
 
-  .app-header {
-    padding: 0.85rem 1.15rem;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .header-controls {
-    gap: 0.4rem;
-  }
-
-  .brand-title {
-    font-size: 1.15rem;
-  }
-
-  .control-select {
-    max-width: 150px;
-    font-size: 0.82rem;
-    padding: 0.4rem 0.6rem;
-  }
-
   .chat-container {
     padding: 1.15rem;
   }
@@ -886,10 +912,6 @@ code.inline-code {
   .prompt-chips {
     grid-template-columns: repeat(2, 1fr);
   }
-
-  .app-footer {
-    padding: 0.85rem 1.15rem 1rem;
-  }
 }
 
 /* --- Mobile Landscape / Large Phones (481px – 640px) --- */
@@ -900,51 +922,26 @@ code.inline-code {
 
   .app-header {
     padding: 0.75rem 1rem;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    align-items: center;
+    gap: 0.6rem;
   }
 
-  .brand {
-    flex: 0 0 auto;
-    min-width: 0;
+  .header-top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
   }
 
   .brand-title {
     font-size: 1.1rem;
   }
 
-  .brand-avatar {
-    width: 36px;
-    height: 36px;
-  }
-
-  .brand-avatar svg {
-    width: 18px;
-    height: 18px;
-  }
-
   .status-indicator {
     display: none;
   }
 
-  .header-controls {
-    flex: 1 1 auto;
-    justify-content: flex-end;
+  .header-actions {
     gap: 0.35rem;
-  }
-
-  /* Model selector drops to its own full-width row below */
-  .model-selector-wrapper {
-    order: 10;
-    flex-basis: 100%;
-  }
-
-  .control-select {
-    width: 100%;
-    max-width: 100%;
-    font-size: 0.82rem;
-    padding: 0.4rem 0.6rem;
   }
 
   .icon-btn {
@@ -955,6 +952,16 @@ code.inline-code {
   .icon-btn .icon {
     width: 16px;
     height: 16px;
+  }
+
+  .header-model-bar {
+    width: 100%;
+  }
+
+  .control-select {
+    width: 100%;
+    font-size: 0.82rem;
+    padding: 0.4rem 0.6rem;
   }
 
   .chat-container {
@@ -1006,15 +1013,15 @@ code.inline-code {
   }
 
   .input-wrapper {
-    padding: 0.35rem 0.5rem 0.35rem 0.85rem;
+    padding: 0.4rem 0.6rem 0.4rem 0.85rem;
     border-radius: var(--radius-md);
     align-items: center;
   }
 
   .chat-input {
     font-size: 0.9rem;
-    min-height: 38px;
-    padding: 0.4rem 0;
+    min-height: 24px;
+    padding: 0;
   }
 
   .input-actions {

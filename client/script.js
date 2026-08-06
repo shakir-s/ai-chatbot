@@ -69,8 +69,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // 4. Input Field Utilities & Auto-Resizing
   // ---------------------------------------------------------------------------
   const adjustTextareaHeight = () => {
-    userInput.style.height = 'auto';
-    userInput.style.height = `${Math.min(userInput.scrollHeight, 140)}px`;
+    userInput.style.height = '24px';
+    const computedHeight = Math.max(24, Math.min(userInput.scrollHeight, 140));
+    userInput.style.height = `${computedHeight}px`;
   };
 
   const updateCharCounter = () => {
@@ -585,6 +586,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---------------------------------------------------------------------------
   initTheme();
   initSpeechRecognition();
+  adjustTextareaHeight();
+  updateCharCounter();
   themeToggleBtn.addEventListener('click', toggleTheme);
   userInput.focus();
 });

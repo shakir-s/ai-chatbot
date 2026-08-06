@@ -21,27 +21,80 @@
     
     <!-- Top Header -->
     <header class="app-header">
-      <div class="brand">
-        <div class="brand-avatar" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 2a10 10 0 1 0 10 10H12V2z"></path>
-            <path d="M12 12L2.5 4.5"></path>
-            <path d="M12 12v9.5"></path>
-            <path d="M12 12h9.5"></path>
-          </svg>
+      
+      <!-- Top Bar: Brand Info (Left) + Action Controls (Right) -->
+      <div class="header-top-bar">
+        <div class="brand">
+          <div class="brand-avatar" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2a10 10 0 1 0 10 10H12V2z"></path>
+              <path d="M12 12L2.5 4.5"></path>
+              <path d="M12 12v9.5"></path>
+              <path d="M12 12h9.5"></path>
+            </svg>
+          </div>
+          <div class="brand-info">
+            <h1 class="brand-title">AI Chatbot</h1>
+            <span class="status-indicator">
+              <span class="status-dot"></span> Online
+            </span>
+          </div>
         </div>
-        <div class="brand-info">
-          <h1 class="brand-title">AI Chatbot</h1>
-          <span class="status-indicator">
-            <span class="status-dot"></span> Online
-          </span>
+
+        <!-- Controls & Action Buttons -->
+        <div class="header-actions">
+          <!-- Read Aloud Toggle -->
+          <button id="ttsToggleBtn" class="icon-btn" title="Toggle Auto Read-Aloud (Text-to-Speech)" aria-label="Toggle Auto Read-Aloud">
+            <svg class="icon tts-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <line x1="23" y1="9" x2="17" y2="15"></line>
+              <line x1="17" y1="9" x2="23" y2="15"></line>
+            </svg>
+            <svg class="icon tts-on hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            </svg>
+          </button>
+
+          <!-- Clear Chat Button -->
+          <button id="clearChatBtn" class="icon-btn" title="Clear Conversation" aria-label="Clear Conversation">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            </svg>
+          </button>
+
+          <!-- Export Chat Button -->
+          <button id="exportChatBtn" class="icon-btn" title="Export Conversation" aria-label="Export Conversation">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+          </button>
+
+          <!-- Dark / Light Theme Toggle -->
+          <button id="themeToggleBtn" class="icon-btn" title="Toggle Dark/Light Mode" aria-label="Toggle Theme">
+            <svg class="icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            <svg class="icon moon-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </button>
         </div>
       </div>
 
-      <!-- Controls & Settings Header Bar -->
-      <div class="header-controls">
-        
-        <!-- Model Selector -->
+      <!-- Model Selector Bar -->
+      <div class="header-model-bar">
         <div class="control-item model-selector-wrapper">
           <label for="modelSelect" class="sr-only">Select AI Model</label>
           <select id="modelSelect" class="control-select" title="Choose AI Model">
@@ -49,56 +102,8 @@
             <option value="gemini-3.1-flash-lite">Gemini 3.1 Flash-Lite</option>
           </select>
         </div>
-
-        <!-- Read Aloud Toggle -->
-        <button id="ttsToggleBtn" class="icon-btn" title="Toggle Auto Read-Aloud (Text-to-Speech)" aria-label="Toggle Auto Read-Aloud">
-          <svg class="icon tts-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-            <line x1="23" y1="9" x2="17" y2="15"></line>
-            <line x1="17" y1="9" x2="23" y2="15"></line>
-          </svg>
-          <svg class="icon tts-on hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-          </svg>
-        </button>
-
-        <!-- Clear Chat Button -->
-        <button id="clearChatBtn" class="icon-btn" title="Clear Conversation" aria-label="Clear Conversation">
-          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="3 6 5 6 21 6"></polyline>
-            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-          </svg>
-        </button>
-
-        <!-- Export Chat Button -->
-        <button id="exportChatBtn" class="icon-btn" title="Export Conversation" aria-label="Export Conversation">
-          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="7 10 12 15 17 10"></polyline>
-            <line x1="12" y1="15" x2="12" y2="3"></line>
-          </svg>
-        </button>
-
-        <!-- Dark / Light Theme Toggle -->
-        <button id="themeToggleBtn" class="icon-btn" title="Toggle Dark/Light Mode" aria-label="Toggle Theme">
-          <svg class="icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="5"></circle>
-            <line x1="12" y1="1" x2="12" y2="3"></line>
-            <line x1="12" y1="21" x2="12" y2="23"></line>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-            <line x1="1" y1="12" x2="3" y2="12"></line>
-            <line x1="21" y1="12" x2="23" y2="12"></line>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-          </svg>
-          <svg class="icon moon-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-          </svg>
-        </button>
-
       </div>
+
     </header>
 
     <!-- Main Chat Messages View -->
