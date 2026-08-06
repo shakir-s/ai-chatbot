@@ -227,14 +227,17 @@ document.addEventListener('DOMContentLoaded', () => {
     wrapper.id = messageId;
 
     const isUser = role === 'user';
-    const avatar = isUser ? 'YOU' : '🤖';
+    const avatarIcon = isUser ? 'YOU' : '🤖';
+    const senderName = isUser ? 'You' : 'AI Chatbot';
 
     const formattedContent = isUser 
       ? text.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>')
       : renderMarkdown(text);
 
     wrapper.innerHTML = `
-      <div class="avatar ${isUser ? 'user-avatar' : 'assistant-avatar'}" aria-hidden="true">${avatar}</div>
+      <div class="message-sender-row">
+        ${isUser ? `<span class="sender-label">${senderName}</span><div class="avatar user-avatar" aria-hidden="true">${avatarIcon}</div>` : `<div class="avatar assistant-avatar" aria-hidden="true">${avatarIcon}</div><span class="sender-label">${senderName}</span>`}
+      </div>
       <div class="bubble-container">
         <div class="bubble ${isUser ? 'user-bubble' : 'assistant-bubble'}">
           ${formattedContent}
