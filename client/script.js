@@ -336,6 +336,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---------------------------------------------------------------------------
   // 6. Loading State & Sending Messages to Express Backend
   // ---------------------------------------------------------------------------
+  const isTouchDevice = () => window.matchMedia('(pointer: coarse)').matches;
+
   const setLoadingState = (loading) => {
     if (loading) {
       sendBtn.disabled = true;
@@ -350,7 +352,9 @@ document.addEventListener('DOMContentLoaded', () => {
       sendIcon.classList.remove('hidden');
       btnSpinner.classList.add('hidden');
       typingIndicator.classList.add('hidden');
-      userInput.focus();
+      if (!isTouchDevice()) {
+        userInput.focus();
+      }
     }
   };
 
@@ -589,5 +593,7 @@ document.addEventListener('DOMContentLoaded', () => {
   adjustTextareaHeight();
   updateCharCounter();
   themeToggleBtn.addEventListener('click', toggleTheme);
-  userInput.focus();
+  if (!isTouchDevice()) {
+    userInput.focus();
+  }
 });
