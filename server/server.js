@@ -74,9 +74,11 @@ app.use((err, req, res, next) => {
 
 // 9. Start Server
 app.listen(PORT, () => {
+  const hasApiKey = Boolean(process.env.GEMINI_API_KEY && process.env.GEMINI_API_KEY !== 'your_gemini_api_key_here');
   console.log(`==================================================`);
   console.log(`🚀 AI Chatbot Server is running on port ${PORT}`);
   console.log(`🌐 Local Web UI: http://localhost:${PORT}`);
   console.log(`📡 API Endpoint: http://localhost:${PORT}/api/chat`);
+  console.log(`🔑 Gemini API Key Status: ${hasApiKey ? 'Configured ✅' : 'Missing / Demo Mode ⚠️'}`);
   console.log(`==================================================`);
 });

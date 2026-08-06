@@ -215,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return htmlLines;
   };
 
-  const appendMessage = (role, text, timestamp = formatTimestamp()) => {
+  const appendMessage = (role, text, timestamp = formatTimestamp(), isError = false) => {
     // Hide welcome screen on first message
     if (welcomeScreen && !welcomeScreen.classList.contains('hidden')) {
       welcomeScreen.classList.add('hidden');
@@ -324,10 +324,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Save to conversation state
-    conversationHistory.push({ role, content: text, timestamp });
+    conversationHistory.push({ role, content: text, timestamp, isError });
 
     // Trigger TTS if enabled and message is from assistant
-    if (!isUser && isTTSOn) {
+    if (!isUser && isTTSOn && !isError) {
       speakText(text);
     }
   };
@@ -361,8 +361,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
+  const getPriorHistory = () => {
+    // Exclude error messages and system notices from AI context
+    const validHistory = conversationHistory.filter(msg => 
+      !msg.isError && 
+      msg.content && 
+      !msg.content.startsWith('⚠️') && 
+      !msg.content.includes('Offline Preview Mode')
+    );
+    // Take an even number of items from the end of valid history (e.g. max 6 items = 3 turns)
+    // so that history slice always starts with 'user' and ends with 'assistant'
+    const limit = 6;
+    let sliceLength = Math.min(validHistory.length, limit);
+    if (sliceLength % 2 !== 0) {
+      sliceLength -= 1;
+    }
+    return sliceLength > 0 ? validHistory.slice(-sliceLength) : [];
+  };
+
   const sendChatMessage = async (prompt) => {
     lastUserMessage = prompt;
+    const priorHistory = getPriorHistory();
     appendMessage('user', prompt);
     setLoadingState(true);
 
@@ -378,7 +397,7 @@ document.addEventListener('DOMContentLoaded', () => {
         body: JSON.stringify({
           prompt: prompt,
           model: selectedModel,
-          history: conversationHistory.slice(-6) // Send recent context
+          history: priorHistory
         })
       });
 
@@ -397,11 +416,11 @@ document.addEventListener('DOMContentLoaded', () => {
       // Check if backend server is unreachable (Client-side offline fallback simulation)
       if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
         const fallbackResponse = `🤖 **Offline Preview Mode**\n\nI received your prompt: "${prompt}".\n\n*Note: The Node.js Express server is currently offline or unreachable at \`/api/chat\`.* Start the server using \`npm run start\` to connect live AI models!`;
-        appendMessage('assistant', fallbackResponse);
+        appendMessage('assistant', fallbackResponse, undefined, true);
         showToast('Server offline - Running in preview mode', true);
       } else {
         // Real API Error
-        appendMessage('assistant', `⚠️ **Error:** ${error.message}`);
+        appendMessage('assistant', `⚠️ **Error:** ${error.message}`, undefined, true);
         showToast(error.message, true);
       }
     } finally {

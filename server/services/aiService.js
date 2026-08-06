@@ -39,22 +39,11 @@ class AIService {
         systemInstruction: 'You are a helpful, polite, and intelligent AI assistant. Provide concise, accurate, and visually structured responses using Markdown formatting where appropriate.'
       });
 
-      // Build chat history if present
-      let formattedHistory = [];
-      if (Array.isArray(history) && history.length > 0) {
-        history.forEach(msg => {
-          if (msg.role && msg.content) {
-            formattedHistory.push({
-              role: msg.role === 'user' ? 'user' : 'model',
-              parts: [{ text: String(msg.content) }]
-            });
-          }
-        });
-      }
+      const sanitizedHistory = this.sanitizeHistory(history, prompt);
 
       let responseText = '';
-      if (formattedHistory.length > 0) {
-        const chat = generativeModel.startChat({ history: formattedHistory });
+      if (sanitizedHistory.length > 0) {
+        const chat = generativeModel.startChat({ history: sanitizedHistory });
         const result = await chat.sendMessage(prompt);
         const response = await result.response;
         responseText = response.text();
@@ -94,6 +83,66 @@ class AIService {
 
       throw new Error(`Gemini AI service error: ${errStr}`);
     }
+  }
+
+  /**
+   * Sanitizes and formats chat history to comply with Gemini SDK requirements:
+   * - Must start with 'user'
+   * - Must strictly alternate roles (user <-> model)
+   * - Must end with 'model' before sendMessage(prompt) is called
+   * - Filters out error notices and empty entries
+   */
+  static sanitizeHistory(history, prompt = '') {
+    const formattedHistory = [];
+
+    if (Array.isArray(history) && history.length > 0) {
+      history.forEach(msg => {
+        if (msg && msg.role && msg.content) {
+          const contentStr = String(msg.content).trim();
+          const isErrorOrNotice = (
+            contentStr.startsWith('⚠️') || 
+            contentStr.includes('Gemini AI service error') ||
+            contentStr.includes('Offline Preview Mode') ||
+            contentStr.includes('Rate-Limit Fallback')
+          );
+
+          if (contentStr && !isErrorOrNotice) {
+            formattedHistory.push({
+              role: msg.role === 'user' ? 'user' : 'model',
+              parts: [{ text: contentStr }]
+            });
+          }
+        }
+      });
+    }
+
+    if (formattedHistory.length > 0 && formattedHistory[formattedHistory.length - 1].role === 'user') {
+      formattedHistory.pop();
+    }
+
+    const sanitized = [];
+    formattedHistory.forEach(item => {
+      if (sanitized.length === 0) {
+        sanitized.push(item);
+      } else {
+        const lastItem = sanitized[sanitized.length - 1];
+        if (lastItem.role === item.role) {
+          sanitized[sanitized.length - 1] = item;
+        } else {
+          sanitized.push(item);
+        }
+      }
+    });
+
+    while (sanitized.length > 0 && sanitized[0].role !== 'user') {
+      sanitized.shift();
+    }
+
+    while (sanitized.length > 0 && sanitized[sanitized.length - 1].role !== 'model') {
+      sanitized.pop();
+    }
+
+    return sanitized;
   }
 }
 
